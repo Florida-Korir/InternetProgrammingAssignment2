@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    form {
+        margin-top: 50px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    .error-message {
+        color: red;
+    }
+    .signup-button {
+        margin-top: 20px;
+        background-color: #008CBA;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .signup-button:hover {
+        background-color: #005f79;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <input type="submit" value="Login">
+        <p id="loginError" class="error-message"></p>
+    </form>
+
+    <!-- Button to redirect to signup page -->
+    <button class="signup-button" onclick="redirectToSignup()">Not yet registered? Sign up here.</button>
+</div>
+
+<script>
+    document.getElementById("loginForm").onsubmit = function(event) {
+        event.preventDefault();
+        var username = document.getElementById("loginUsername").value;
+        var password = document.getElementById("loginPassword").value;
+        var users = JSON.parse(localStorage.getItem("users")) || [];
+
+        var user = users.find(function(user) {
+            return user.username === username && user.password === password;
+        });
+
+        if (user) {
+            // Login successful, store username in localStorage and redirect to dashboard
+            localStorage.setItem("loggedInUser", username);
+            window.location.href = "dashboard.html";
+        } else {
+            document.getElementById("loginError").textContent = "Invalid username or password.";
+        }
+    };
+
+    function redirectToSignup() {
+        window.location.href = "signup.html";
+    }
+</script>
+
+</body>
+</html>

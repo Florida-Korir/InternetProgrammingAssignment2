@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    form {
+        margin-top: 50px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    .success-message {
+        color: green;
+    }
+    .success-button {
+        margin-top: 20px;
+        background-color: #008CBA;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .success-button:hover {
+        background-color: #005f79;
+    }
+    .login-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin-top: 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .login-button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Signup</h2>
+    <form id="signupForm">
+        <input type="text" id="signupUsername" placeholder="Username" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        <input type="submit" value="Signup">
+        <p id="signupSuccess" class="success-message"></p>
+    </form>
+
+    <!-- Button to redirect to login page -->
+    <button class="login-button" onclick="redirectToLogin()">Login here.</button>
+</div>
+
+<script>
+    document.getElementById("signupForm").onsubmit = function(event) {
+        event.preventDefault();
+        var username = document.getElementById("signupUsername").value;
+        var password = document.getElementById("signupPassword").value;
+        var users = JSON.parse(localStorage.getItem("users")) || [];
+
+        var existingUser = users.find(function(user) {
+            return user.username === username;
+        });
+
+        if (existingUser) {
+            document.getElementById("signupSuccess").textContent = "Username already exists.";
+        } else {
+            users.push({username: username, password: password});
+            localStorage.setItem("users", JSON.stringify(users));
+            showSuccessMessage();
+        }
+    };
+
+    function showSuccessMessage() {
+        document.getElementById("signupSuccess").innerHTML = "Signup successful. You can now log in! <br> <button class='success-button' onclick='redirectToLogin()'>Login here</button>";
+    }
+
+    // Function to redirect to login page
+    function redirectToLogin() {
+        window.location.href = "login.html";
+    }
+</script>
+
+</body>
+</html>

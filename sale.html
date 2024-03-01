@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bark Co. - Sell Dogs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        #dogs {
+            display: flex;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            justify-content: center; 
+        }
+        .dog-item {
+            margin-right: 20px;
+            flex: 0 0 auto;
+        }
+        .checkout-container {
+            justify-content: center;
+        }
+        .dog-item button {
+            padding: 5px 5px;
+            font-size: 14px;
+        }
+        .dog-item input[type="number"] {
+            width: 60px;
+            height: 30px;
+            font-size: 14px;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Bark Co.</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sale.html">Dogs for Sale</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Selling Section -->
+    <section id="sell" class="container py-5">
+        <div id="dogs">
+            <div class="dog-item">
+                <img src="https://source.unsplash.com/200x200/?bulldog" alt="Bulldog" style="width: 150px; height: 150px;">
+                <h6>Bulldog</h6>
+                <p>Price: $600</p>
+                <input type="number" id="quantity-bulldog" min="0" value="0">
+                <button class="btn btn-primary add-to-cart" onclick="addToCart('Bulldog', 600, 'quantity-bulldog')">Add to Cart</button>
+            </div>
+            <div class="dog-item">
+                <img src="https://source.unsplash.com/200x200/?german,shepherd" alt="German Shepherd" style="width: 150px; height: 150px;">
+                <h6>German Shepherd</h6>
+                <p>Price: $700</p>
+                <input type="number" id="quantity-german-shepherd" min="0" value="0">
+                <button class="btn btn-primary add-to-cart" onclick="addToCart('German Shepherd', 700, 'quantity-german-shepherd')">Add to Cart</button>
+            </div>
+            <div class="dog-item">
+                <img src="https://source.unsplash.com/200x200/?poodle" alt="Poodle" style="width: 150px; height: 150px;">
+                <h6>Poodle</h6>
+                <p>Price: $800</p>
+                <input type="number" id="quantity-poodle" min="0" value="0">
+                <button class="btn btn-primary add-to-cart" onclick="addToCart('Poodle', 800, 'quantity-poodle')">Add to Cart</button>
+            </div>
+            <div class="dog-item">
+                <img src="https://source.unsplash.com/200x200/?labrador,retriever" alt="Labrador Retriever" style="width: 150px; height: 150px;">
+                <h6>Labrador Retriever</h6>
+                <p>Price: $400</p>
+                <input type="number" id="quantity-labrador" min="0" value="0">
+                <button class="btn btn-primary add-to-cart" onclick="addToCart('Labrador Retriever', 400, 'quantity-labrador')">Add to Cart</button>
+            </div>
+            <div class="dog-item">
+                <img src="https://source.unsplash.com/200x200/?golden,retriever" alt="Golden Retriever" style="width: 150px; height: 150px;">
+                <h6>Golden Retriever</h6>
+                <p>Price: $500</p>
+                <input type="number" id="quantity-golden" min="0" value="0">
+                <button class="btn btn-primary add-to-cart" onclick="addToCart('Golden Retriever', 500, 'quantity-golden')">Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- Cart Section -->
+        <div class="checkout-container">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Your Cart</h5>
+                    <ul class="list-group">
+                    </ul>
+                    <hr>
+                    <p>Total: <span class="total">$0</span></p>
+                    <button class="btn btn-success checkout" onclick="checkout()">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <div class="container py-4">
+            <p>&copy; 2024 Bark Co. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript functions for adding to cart and checkout
+        let cart = [];
+        let total = 0;
+
+        function addToCart(name, price, quantityId) {
+            let quantity = parseInt(document.getElementById(quantityId).value);
+            if (quantity > 0) {
+                let itemTotal = price * quantity;
+                total += itemTotal;
+                cart.push({ name: name, price: price, quantity: quantity });
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            let cartList = document.querySelector('.list-group');
+            cartList.innerHTML = '';
+            cart.forEach(item => {
+                cartList.innerHTML += `<li class="list-group-item">${item.name} - $${item.price} x ${item.quantity}</li>`;
+            });
+            document.querySelector('.total').innerText = '$' + total;
+        }
+
+        function checkout() {
+            alert('Checkout payment not yet compelete!');
+            cart = [];
+            total = 0;
+            document.querySelector('.total').innerText = '$' + total;
+            updateCart();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+/* Styles for header, navigation, main, and footer */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+.icon {
+    width: 50px; /* Set width to 50 pixels */
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+}
+
+
